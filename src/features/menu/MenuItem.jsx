@@ -14,7 +14,7 @@ function MenuItem({ pizza }) {
 
   function handlerclick() {
     const item = {
-      pizaaID: id,
+      pizzaId: id,
       name,
       quantity: 1,
       unitPrice,
@@ -42,8 +42,8 @@ function MenuItem({ pizza }) {
           )}
           {isincart && (
             <div className=" flex items-center gap-4 sm:gap-8">
-              <UpdateItemQuantity pizaaID={id} />
-              <DeleteItem pizaaID={id} />
+              <UpdateItemQuantity pizzaId={id} />
+              <DeleteItem pizzaId={id} />
             </div>
           )}
           {!soldOut && !isincart && (

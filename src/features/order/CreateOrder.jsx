@@ -16,26 +16,58 @@ const isValidPhone = (str) =>
 
 const fakeCart = [
   {
-    pizzaId: 12,
-    name: "Mediterranean",
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
+    customer: "aaaaa",
+    phone: "12324",
+    address: "Sharjah, Sharjah , United Arab Emirates (the)",
+    priority: true,
+    cart: [
+      {
+        pizaaID: 1,
+        name: "Margherita",
+        quantity: 4,
+        unitPrice: 12,
+        totalPrice: 48,
+      },
+    ],
+    position: "undefined, 55.3881039 ",
   },
   {
-    pizzaId: 6,
-    name: "Vegetale",
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
+    customer: "asd",
+    phone: "3123124",
+    address: "Sharjah, Sharjah , United Arab Emirates (the)",
+    cart: [
+      {
+        pizzaId: 1,
+        name: "Margherita",
+        quantity: 3,
+        unitPrice: 12,
+        totalPrice: 36,
+      },
+    ],
+    position: "25.3467396,55.3881039",
+    priority: false,
   },
-  {
-    pizzaId: 11,
-    name: "Spinach and Mushroom",
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
+  // {
+  //   pizzaId: 12,
+  //   name: "Mediterranean",
+  //   quantity: 2,
+  //   unitPrice: 16,
+  //   totalPrice: 32,
+  // },
+  // {
+  //   pizzaId: 6,
+  //   name: "Vegetale",
+  //   quantity: 1,
+  //   unitPrice: 13,
+  //   totalPrice: 13,
+  // },
+  // {
+  //   pizzaId: 11,
+  //   name: "Spinach and Mushroom",
+  //   quantity: 1,
+  //   unitPrice: 15,
+  //   totalPrice: 15,
+  // },
 ];
 
 function CreateOrder() {
@@ -50,7 +82,7 @@ function CreateOrder() {
   );
   const positionloding = status === "loading";
 
-  const cart = fakeCart;
+  const cart = useSelector(gercart);
   const Priority = withPriority ? withPriority * 0.2 : 0;
   const totalCartPrice = useSelector(Totalprice);
   const totalprice = totalCartPrice + Priority;
@@ -161,10 +193,10 @@ export async function action({ request }) {
     priority: data.priority === "true",
   };
   console.log(order);
-  // const eroor = {};
-  // if (!isValidPhone(order.phone))
-  //   eroor.phone = "Please give us your corect nummber";
-  // if (Object.keys(eroor).length > 0) return eroor;
+  const eroor = {};
+  if (!isValidPhone(order.phone))
+    eroor.phone = "Please give us your corect nummber";
+  if (Object.keys(eroor).length > 0) return eroor;
   const Neworder = await createOrder(order);
   store.dispatch(clearItem());
 
@@ -172,3 +204,33 @@ export async function action({ request }) {
 }
 
 export default CreateOrder;
+
+// onst isValidPhone = (str) =>
+//   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
+//     str,
+//   );
+
+// function CreateOrder() {
+//   const [withPriority, setWithPriority] = useState(false);
+
+//   const {
+//     username,
+//     status: AddressStatus,
+//     position,
+//     address,
+//     error: errorAddress,
+//   } = useSelector((store) => store.user);
+
+//   const isLoadingAddress = AddressStatus === "loading";
+
+//   const navigation = useNavigation();
+
+//   const isSubmitting = navigation.state === "submitting";
+
+//   const formErrors = useActionData();
+//   const dispatch = useDispatch();
+
+//   const cart = useSelector(getCart);
+//   const totalCartPrice = useSelector(getTotalCartPrice);
+//   const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
+//   const totalPrice = totalCartPrice + priorityPrice;
